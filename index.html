@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<!-- CSS only -->
+<style>
+
+
+	#all{
+		width: 460px;
+		background-color: red;
+	}
+
+	.row{
+		display: block;
+	}
+
+	.section{
+		display: inline-flex;
+	}
+
+	.section div { 
+		float: left;
+		display: inline-block;
+		margin-top: 20px;
+		height: 30px;
+	}
+
+	#in, #out{
+		margin-top: 30px;
+	}
+
+	
+
+</style>
+<body>
+	<div id="scale_wrapper">1 pixel = <span id="scale">10000000</span> years</div>
+	<div class="row">
+		<h3>All Time</h3>
+		<div class="section">
+			<div id='all' data-title='All Time'></div>
+		</div>
+	</div>
+	<div class="row">
+		<h3>Eons</h3>
+		<div class="section">
+			<div id='phanerozoic' class='eon' data-title='Phanerozoic Eon'></div>
+			<div id='proterozoic' class='eon' data-title='Proterozoic Eon'></div>
+			<div id='archean' class='eon' data-title='Archean Eon'></div>
+			<div id='hadean' class='eon' data-title='Hadean Eon'></div>
+		</div>
+	</div>
+	<div class="row">
+		<h3>Eras</h3>
+		<div class="section">
+			<div id='cenozoic' class='era' data-title='Cenozoic Era'></div>
+			<div id='mesozoic' class='era' data-title='Mesozoic Era'></div>
+			<div id='paleozoic' class='era' data-title='Paleozoic Era'></div>
+		</div>
+	</div>
+	<div class="row">
+		<h3>Periods</h3>
+		<div class="section">
+			<div id='quaternary' class='period' data-title='Quaternary Period'></div>
+			<div id='neogene' class='period' data-title='Neogene Period'></div>
+			<div id='paleogene' class='period' data-title='Paleogene Period'></div>
+			<div id='cretaceous' class='period' data-title='Cretaceous Period'></div>
+			<div id='jurassic' class='period' data-title='Jurassic Period'></div>
+			<div id='triassic' class='period' data-title='Triassic Period'></div>
+			<div id='permian' class='period' data-title='Permian Period'></div>
+			<div id='carboniferous' class='period' data-title='Carboniferous Period'></div>
+			<div id='devonian' class='period' data-title='Devonian Period'></div>
+			<div id='silurian' class='period' data-title='Silurian Period'></div>
+			<div id='ordovician' class='period' data-title='Ordovician Period'></div>
+			<div id='cambrian' class='period' data-title='Cambrian Period'></div>
+		</div>
+	</div>
+	<div class="row">
+		<h3>Epochs</h3>
+		<div class="section">
+			<div id='holocene' class='epoch' data-title='Holocene Epoch'></div>
+			<div id='pleistocene' class='epoch' data-title='Pleistocene Epoch'></div>
+			<div id='pliocene' class='epoch' data-title='Pliocene Epoch'></div>
+			<div id='miocene' class='epoch' data-title='Miocene Epoch'></div>
+			<div id='oligocene' class='epoch' data-title='Oligocene Epoch'></div>
+			<div id='eocene' class='epoch' data-title='Eocene Epoch'></div>
+			<div id='paleocene' class='epoch' data-title='Paleocene Epoch'></div>
+		</div>
+	</div>
+	<div class="row">
+		<h3>Fun Times</h3>
+		<p>Events take place starting at the right had side of their box</p>
+		<div class="section">
+			<div id='today' data-title='This is today'></div>
+			<div id='year' data-title='Just a single year'></div>
+			<div id='degree' data-title='Typical 4 year degree'></div>
+			<div id='cas' data-title='Invention of CRISPR-Cas9 technology'></div>
+			<div id='twitter' data-title='Twitter was born!'></div>
+			<div id='y2k' data-title='The year 2000... we made it!'></div>
+			<div id='www' data-title='Invention of the World Wide Web information system'></div>
+			<div id='moon' data-title='First astronaut on the Moon'></div>
+			<div id='rights' data-title='Universal Declaration of Human Rights'></div>
+			<div id='first_car' data-title='Carl Benz applied for a patent for his “vehicle powered by a gas engine.”'></div>
+			<div id='copernicus' data-title='Copernicus has a theory, the Earth and the planets revolve around the Sun!'></div>
+			<div id='paper' data-title='Use of paper for writing and painting begins to supplant bamboo and silk in China'></div>
+			<div id='iron' data-title='Start of the Iron Age'></div>
+			<div id='black_sea' data-title='Flooding of the Black Sea from the Mediterranean Sea'></div>
+			<div id='cats' data-title='Domestication of cats'></div>			
+			<div id='humans' data-title='Earliest monumental ritual art dipicting humans'></div>
+		</div>
+	</div>
+	
+	<div>
+		<button id='in'>zoom in</button>
+		<button id='out'>zoom out</button>
+	</div>
+	<div style="margin-top: 20px;">
+		<button id='in10'>zoom in x10</button>
+		<button id='out10'>zoom out x10</button>
+	</div>
+	<div style="margin-top: 20px;">
+		<button id='reset'>reset</button>
+	</div>
+	<div id='info_box'></div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+	$(document).ready(function(){
+		var scale = 10000000;
+		var all_width = 4600000000;
+		var widths = {'hadean': 600000000,
+					'archean': 1500000000,
+					'proterozoic': 1959000000,
+					'phanerozoic': 541000000,
+					'paleozoic': 289000000,
+					'cambrian': 56000000,
+					'ordovician': 42000000,
+					'silurian': 24000000,
+					'devonian': 60000000,
+					'carboniferous': 60000000,
+					'permian': 47000000,
+					'mesozoic': 186000000,
+					'triassic': 51000000,
+					'jurassic': 56000000,
+					'cretaceous': 79000000,
+					'cenozoic': 66000000,
+					'paleogene': 43000000,
+					'paleocene': 10000000,
+					'eocene': 22000000,
+					'oligocene': 10900000,
+					'neogene': 20400000,
+					'miocene': 17700000,
+					'pliocene': 2700000,
+					'quaternary': 2600000,
+					'pleistocene': 2588300,
+					'holocene': 11700,
+					'humans': 100, 
+					'cats': 1600, 
+					'black_sea': 2500, 
+					'iron': 4450, 
+					'paper': 1150, 
+					'copernicus': 1422, 
+					'first_car': 343, 
+					'rights': 62, 
+					'moon': 21, 
+					'www': 20, 
+					'y2k': 11, 
+					'twitter': 6, 
+					'cas': 6, 
+					'degree': 5, 
+					'year': 1, 
+					'today': 0.0028
+					};
+
+
+		$('#in').on('click', function() {
+			zoomIn(2);
+		})
+
+		$('#in10').on('click', function() {
+			zoomIn(10);
+		})
+
+		$('#out').on('click', function() {
+			zoomOut(2);
+		})
+
+		$('#out10').on('click', function() {
+			zoomOut(10);
+		})
+
+		$('#reset').on('click', function() {
+			scale = 10000000;
+			zoomIn(10);
+		})
+
+
+		$(document).on('mouseover', '.section div', function(){
+			var title = $(this).data('title');
+			$('#info_box').html('<h1 style="width: 100%; text-align: center;">' + title + '</h1>');
+		})
+
+		function zoomIn(multiplier){
+			scale = scale / multiplier;
+			$('#scale').text(scale);
+			$('#all').css('width', all_width / scale + 'px');
+			$('.section div').each(function(){
+				var width_key = $(this).attr('id');
+				var width = widths[width_key] / scale;
+				if(width < 1){
+					width = 0;
+				}
+				$(this).css('width', width + 'px');
+				$(this).css('background-color', stringToColour(width_key));
+			})
+		}
+
+		function zoomOut(multiplier){
+			scale = scale * multiplier;
+			$('#scale').text(scale);
+			$('#all').css('width', all_width / scale + 'px');
+			$('.section div').each(function(){
+				var width_key = $(this).attr('id');
+				var width = widths[width_key] / scale;
+				if(width < 1){
+					width = 0;
+				}
+				$(this).css('width', width + 'px');
+				$(this).css('background-color', stringToColour(width_key));
+			})
+		}
+
+		var stringToColour = function(str) {
+		  var hash = 0;
+		  for (var i = 0; i < str.length; i++) {
+		    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+		  }
+		  var colour = '#';
+		  for (var i = 0; i < 3; i++) {
+		    var value = (hash >> (i * 8)) & 0xFF;
+		    colour += ('00' + value.toString(16)).substr(-2);
+		  }
+		  return colour;
+		}
+
+		zoomIn(10);
+
+	})
+</script>
+</html>
